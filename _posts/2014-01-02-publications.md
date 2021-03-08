@@ -13,6 +13,8 @@ fa-icon: book
   <br>
   <strong>Tal Daniel</strong> and Aviv Tamar
   <br>
+  <strong>CVPR 2021 Oral</strong>
+  <br>
   arXiv Pre-print, 2021
   <br>
   [<a href="https://arxiv.org/abs/2012.13253">Paper</a>][<a href="https://taldatech.github.io/soft-intro-vae-web/">Website</a>][<a href="https://github.com/taldatech/soft-intro-vae-pytorch">Code</a>]
