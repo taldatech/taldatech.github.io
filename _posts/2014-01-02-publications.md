@@ -17,7 +17,7 @@ fa-icon: book
   <br>
   [<a href="https://arxiv.org/">Paper</a>][<a href="https://taldatech.github.io/deep-latent-particles-web/">Website</a>][<a href="https://github.com/taldatech/deep-latent-particles-pytorch">Code</a>][<a href="https://www.youtube.com/">Video</a>]
   <br>
-  <strong>TL;DR</strong> - represent images as latent particles, unsupervised detection and segmentation of objects, particles can be controlled and used for image manipulation and video prediction.
+  <strong>TL;DR</strong> - Represent images as latent particles, unsupervised detection and segmentation of objects, particles can be controlled and used for image manipulation and video prediction.
 </p>
 
 <p align="center">
