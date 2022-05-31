@@ -8,6 +8,19 @@ fa-icon: book
 ### Publications and Pre-Prints
 
 <p align="center">
+  <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/dlp_paper_icon.png" style="height:130px" align="left">
+  <strong>Unsupervised Image Representation Learning with Deep Latent Particles</strong>
+  <br>
+  <strong>Tal Daniel</strong> and Aviv Tamar
+  <br>
+  <strong>ICML 2022</strong>
+  <br>
+  [<a href="https://arxiv.org/">Paper</a>][<a href="https://taldatech.github.io/deep-latent-particles-web/">Website</a>][<a href="https://github.com/taldatech/deep-latent-particles-pytorch">Code</a>][<a href="https://www.youtube.com/">Video</a>]
+  <br>
+  <strong>TL;DR</strong> - represent images as latent particles, unsupervised detection and segmentation of objects, particles can be controlled and used for image manipulation and video prediction.
+</p>
+
+<p align="center">
   <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/sv_paper_icon.png" style="height:130px" align="left">
   <strong>Soft-IntroVAE: Analyzing and Improving the Introspective Variational Autoencoder</strong>
   <br>
