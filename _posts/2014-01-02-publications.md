@@ -41,6 +41,8 @@ fa-icon: book
   <br>
   <strong>CVPR 2021 Oral</strong>
   <br>
+  MLIS-TCE Conference 2022 - Best Paper Award
+  <br>
   [<a href="https://arxiv.org/abs/2012.13253">Paper</a>][<a href="https://taldatech.github.io/soft-intro-vae-web/">Website</a>][<a href="https://github.com/taldatech/soft-intro-vae-pytorch">Code</a>][<a href="https://www.youtube.com/watch?v=1NfsSYoHnBg">Video</a>]
   <br>
   <strong>TL;DR</strong> - Stable adversarial training of VAEs without a discriminator, applicable for density estimation, image generation, image translation, Out-of-Distribution detection and many more.
