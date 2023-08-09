@@ -8,6 +8,19 @@ fa-icon: book
 ### Publications and Pre-Prints
 
 <p align="center">
+  <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ddlp_paper_icon.png" style="height:130px" align="left">
+  <strong>DDLP: Unsupervised Object-centric Video Prediction with Deep Dynamic Latent Particles</strong>
+  <br>
+  <strong>Tal Daniel</strong> and Aviv Tamar
+  <br>
+  Pre-print
+  <br>
+  [<a href="https://arxiv.org/abs/2306.05957">Paper</a>][<a href="https://taldatech.github.io/ddlp-web/">Website</a>][<a href="https://github.com/taldatech/ddlp">Code</a>]
+  <br>
+  <strong>TL;DR</strong> - A new object-centric video prediction, generation and modification algorithm based on the deep latent particle (DLP) representation.
+</p>
+
+<p align="center">
   <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/dlp_paper_icon.png" style="height:130px" align="left">
   <strong>Unsupervised Image Representation Learning with Deep Latent Particles</strong>
   <br>
@@ -15,7 +28,7 @@ fa-icon: book
   <br>
   <strong>ICML 2022</strong>
   <br>
-  [<a href="https://arxiv.org/abs/2205.15821">Paper</a>][<a href="https://taldatech.github.io/deep-latent-particles-web/">Website</a>][<a href="https://github.com/taldatech/deep-latent-particles-pytorch">Code</a>][<a href="https://www.youtube.com/">Video</a>]
+  [<a href="https://arxiv.org/abs/2205.15821">Paper</a>][<a href="https://taldatech.github.io/deep-latent-particles-web/">Website</a>][<a href="https://github.com/taldatech/deep-latent-particles-pytorch">Code</a>][<a href="https://www.youtube.com/watch?v=6xywAtE7WPw">Video</a>]
   <br>
   <strong>TL;DR</strong> - Represent images as latent particles, unsupervised detection and segmentation of objects, particles can be controlled and used for image manipulation and video prediction.
 </p>
@@ -54,7 +67,7 @@ fa-icon: book
   <br>
   Bijeeta Pal, <strong>Tal Daniel</strong>, Rahul Chatterjee and Thomas Ristenpart
   <br>
-  2019 IEEE Symposium on Security and Privacy (SP)
+  <strong>2019 IEEE Symposium on Security and Privacy (SP)</strong>
   <br>
   [<a href="https://ieeexplore.ieee.org/document/8835247">Paper</a>]
   <br>
