@@ -13,11 +13,24 @@ fa-icon: book
   <br>
   <strong>Tal Daniel</strong> and Aviv Tamar
   <br>
-  Pre-print
+  <strong>Transactions on Machine Learning Research (TMLR) 2024</strong>
   <br>
-  [<a href="https://arxiv.org/abs/2306.05957">Paper</a>][<a href="https://taldatech.github.io/ddlp-web/">Website</a>][<a href="https://github.com/taldatech/ddlp">Code</a>]
+  [<a href="https://arxiv.org/abs/2306.05957">Paper</a>][<a href="https://taldatech.github.io/ddlp-web/">Website</a>][<a href="https://github.com/taldatech/ddlp">Code</a>][<a href="https://www.youtube.com/watch?v=3S2pKhi_ewY">Video</a>]
   <br>
   <strong>TL;DR</strong> - A new object-centric video prediction, generation and modification algorithm based on the deep latent particle (DLP) representation.
+</p>
+
+<p align="center">
+  <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ecrl_paper_icon.png" style="height:130px" align="left">
+  <strong>Entity-Centric Reinforcement Learning for Object Manipulation from Pixels</strong>
+  <br>
+  Dan Haramati, <strong>Tal Daniel</strong> and Aviv Tamar
+  <br>
+  <strong>International Conference on Learning Representations (ICLR) 2024 Spotlight</strong>
+  <br>
+  [<a href="https://arxiv.org/abs/2404.01220">Paper</a>][<a href="https://sites.google.com/view/entity-centric-rl">Website</a>][<a href="https://github.com/DanHrmti/ECRL">Code</a>][<a href="https://youtu.be/1YJCWyLcGHk?si=Igt6GPz7q3fwLLE0">Video</a>]
+  <br>
+  <strong>TL;DR</strong> - We use deep latent particle (DLP) representation as input instead of pixels and unlock compositional capabilities in reinforcement learning.
 </p>
 
 <p align="center">
@@ -26,7 +39,7 @@ fa-icon: book
   <br>
   <strong>Tal Daniel</strong> and Aviv Tamar
   <br>
-  <strong>ICML 2022</strong>
+  <strong>International Conference on Machine Learning (ICML) 2022</strong>
   <br>
   [<a href="https://arxiv.org/abs/2205.15821">Paper</a>][<a href="https://taldatech.github.io/deep-latent-particles-web/">Website</a>][<a href="https://github.com/taldatech/deep-latent-particles-pytorch">Code</a>][<a href="https://www.youtube.com/watch?v=6xywAtE7WPw">Video</a>]
   <br>
@@ -39,7 +52,7 @@ fa-icon: book
   <br>
   <strong>Tal Daniel</strong> and Aviv Tamar
   <br>
-  <strong>CVPR 2021 Oral</strong>
+  <strong>IEEE / CVF Computer Vision and Pattern Recognition Conference (CVPR) 2021 Oral</strong>
   <br>
   MLIS-TCE Conference 2022 - Best Paper Award
   <br>
