@@ -30,7 +30,7 @@ fa-icon: book
   <br>
   [<a href="https://arxiv.org/abs/2404.01220">Paper</a>][<a href="https://sites.google.com/view/entity-centric-rl">Website</a>][<a href="https://github.com/DanHrmti/ECRL">Code</a>][<a href="https://youtu.be/1YJCWyLcGHk?si=Igt6GPz7q3fwLLE0">Video</a>]
   <br>
-  <strong>TL;DR</strong> - We use deep latent particle (DLP) representation as input instead of pixels and unlock compositional capabilities in reinforcement learning.
+  <strong>TL;DR</strong> - We use deep latent particles (DLP) as input instead of pixels and unlock compositional capabilities in reinforcement learning.
 </p>
 
 <p align="center">
