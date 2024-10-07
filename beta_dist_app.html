@@ -62,12 +62,30 @@
 			padding: 0px;
 			border-radius: 4px;
 		}
+		
+		.input-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 10px 0;
+		}
+
+		.input-container label {
+			margin-right: 10px;
+			font-weight: bold;
+		}
+
+		.input-container input {
+			margin-right: 10px;
+			width: 150px;
+		}
     </style>
 </head>
 <body>
 
     <div id="container">
         <h1>Beta Distribution Applet - Interactive Beta Distribution Plot</h1>
+		<h2><a href="https://en.wikipedia.org/wiki/Beta_distribution">Beta Distribution - Wikipedia</a></h2>
         <div id="plot"></div>
 
         <div class="slider-container">
@@ -82,6 +100,19 @@
             <span id="value-b1"></span>
 			<input type="number" id="input-b1" min="0.001" max="100" step="0.001">
         </div>
+		
+		<div class="input-container">
+			<label for="x-value1">Beta(α1, β1): P(X ≥ x) </label>
+			<input type="number" id="x-value1" min="0" max="1" step="0.001" placeholder="X for P(X >= x)">
+			<span id="probability1-gte"></span>
+		</div>
+		<div class="input-container">
+			<label for="x-value1-lte">Beta(α1, β1): P(X ≤ x): </label>
+			<input type="number" id="x-value1-lte" min="0" max="1" step="0.001" placeholder="X for P(X <= x)">
+			<span id="probability1-lte"></span>
+		</div>
+		<div id="mean-std-info-1"></div>
+		
         <div class="slider-container">
             <span class="slider-label">a2: </span>
             <div id="slider-a2" class="slider"></div>
@@ -94,6 +125,21 @@
             <span id="value-b2"></span>
 			<input type="number" id="input-b2" min="0.001" max="100" step="0.001">
         </div>
+		
+		
+
+		<div class="input-container">
+			<label for="x-value2">Beta(α2, β2): P(X ≥ x)</label>
+			<input type="number" id="x-value2" min="0" max="1" step="0.001" placeholder="X for P(X >= x)">
+			<span id="probability2-gte"></span>
+		</div>
+		<div class="input-container">
+			<label for="x-value2-lte">Beta(α2, β2): P(X ≤ x): </label>
+			<input type="number" id="x-value2-lte" min="0" max="1" step="0.001" placeholder="X for P(X <= x)">
+			<span id="probability2-lte"></span>
+		</div>
+		<div id="mean-std-info-2"></div>
+
 
         <div id="kl-divergence"></div>
         <div id="debug-info"></div>
@@ -178,6 +224,15 @@ create_interactive_beta_plot()
                 return jStat.beta.pdf(x, a, b);
             }
 			
+			function betaMean(a, b) {
+				return a / (a + b);
+			}
+
+			function betaStd(a, b) {
+				return Math.sqrt((a * b) / ((a + b) * (a + b) * (a + b + 1)));
+			}
+
+			
 			function customBetaPDF(x, a, b) {
 				if (x < 0 || x > 1) return 0; // Out of bounds
 				if (a <= 0 || b <= 0) return 0; // Invalid parameters
@@ -218,6 +273,16 @@ create_interactive_beta_plot()
                 }
                 return isFinite(kl) ? kl : NaN;
             }
+			
+			function calculateProbability(a, b, x) {
+				if (x < 0 || x > 1) {
+					return { pGteX: "X must be between 0 and 1", pLteX: "X must be between 0 and 1" };
+				}
+				const cdf = jStat.beta.cdf(x, a, b);  // P(X <= x)
+				const pGteX = (1 - cdf).toFixed(4);   // P(X >= x)
+				const pLteX = cdf.toFixed(4);         // P(X <= x)
+				return { pGteX, pLteX };
+			}
 			
 
             const margin = {top: 20, right: 20, bottom: 30, left: 50};
@@ -268,7 +333,45 @@ create_interactive_beta_plot()
                 line2.attr("d", lineGenerator(data2));
 
                 const kl = klDivergence(a1, b1, a2, b2);
-                d3.select("#kl-divergence").text(`KL Divergence: ${isNaN(kl) ? 'NaN' : kl.toFixed(4)}`);
+                d3.select("#kl-divergence").text(`KL Divergence: KL(Beta(α=${a1}, β=${b1}) || Beta(α=${a2}, β=${b2})) = ${isNaN(kl) ? 'NaN' : kl.toFixed(4)}`);
+				
+				 // Calculate mean and std for both distributions
+				const mean1 = betaMean(a1, b1).toFixed(4);
+				const std1 = betaStd(a1, b1).toFixed(4);
+				const mean2 = betaMean(a2, b2).toFixed(4);
+				const std2 = betaStd(a2, b2).toFixed(4);
+
+				// Display mean and std below the plot
+				d3.select("#mean-std-info-1").html(`<p>Beta(α=${a1}, β=${b1}): Mean = ${mean1}, Std = ${std1}</p>`);
+				d3.select("#mean-std-info-2").html(`<p>Beta(α=${a2}, β=${b2}): Mean = ${mean2}, Std = ${std2}</p>`);
+				
+				// Event listener for X input for Beta(α1, β1) - P(X >= x)
+				document.getElementById('x-value1').addEventListener('input', function() {
+					const xValue = parseFloat(this.value);
+					const { pGteX } = calculateProbability(a1, b1, xValue);
+					d3.select("#probability1-gte").text(`P(X >= ${xValue}) = ${pGteX}`);
+				});
+
+				// Event listener for X input for Beta(α1, β1) - P(X <= x)
+				document.getElementById('x-value1-lte').addEventListener('input', function() {
+					const xValue = parseFloat(this.value);
+					const { pLteX } = calculateProbability(a1, b1, xValue);
+					d3.select("#probability1-lte").text(`P(X <= ${xValue}) = ${pLteX}`);
+				});
+
+				// Event listener for X input for Beta(α2, β2) - P(X >= x)
+				document.getElementById('x-value2').addEventListener('input', function() {
+					const xValue = parseFloat(this.value);
+					const { pGteX } = calculateProbability(a2, b2, xValue);
+					d3.select("#probability2-gte").text(`P(X >= ${xValue}) = ${pGteX}`);
+				});
+
+				// Event listener for X input for Beta(α2, β2) - P(X <= x)
+				document.getElementById('x-value2-lte').addEventListener('input', function() {
+					const xValue = parseFloat(this.value);
+					const { pLteX } = calculateProbability(a2, b2, xValue);
+					d3.select("#probability2-lte").text(`P(X <= ${xValue}) = ${pLteX}`);
+				});
             }
 
             function createSlider(id, start, update) {
