@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Distribution Applet - Interactive Beta Distribution Plot</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.6/jstat.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+        }
+
+        #container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #plot {
+            margin: 0 auto;
+            width: 600px;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+
+        .slider-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .slider {
+            width: 500px;
+            display: inline-block;
+        }
+
+        .slider-label {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        #kl-divergence, #debug-info, .credit {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .credit a {
+            color: #0000EE;
+            text-decoration: none;
+        }
+
+        .credit a:hover {
+            text-decoration: underline;
+        }
+		
+		code {
+			background-color: #f4f4f4;
+			padding: 0px;
+			border-radius: 4px;
+		}
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>Beta Distribution Applet - Interactive Beta Distribution Plot</h1>
+        <div id="plot"></div>
+
+        <div class="slider-container">
+            <span class="slider-label">a1: </span>
+            <div id="slider-a1" class="slider"></div>
+            <span id="value-a1"></span>
+			<input type="number" id="input-a1" min="0.001" max="100" step="0.001">
+        </div>
+        <div class="slider-container">
+            <span class="slider-label">b1: </span>
+            <div id="slider-b1" class="slider"></div>
+            <span id="value-b1"></span>
+			<input type="number" id="input-b1" min="0.001" max="100" step="0.001">
+        </div>
+        <div class="slider-container">
+            <span class="slider-label">a2: </span>
+            <div id="slider-a2" class="slider"></div>
+            <span id="value-a2"></span>
+			<input type="number" id="input-a2" min="0.001" max="100" step="0.001">
+        </div>
+        <div class="slider-container">
+            <span class="slider-label">b2: </span>
+            <div id="slider-b2" class="slider"></div>
+            <span id="value-b2"></span>
+			<input type="number" id="input-b2" min="0.001" max="100" step="0.001">
+        </div>
+
+        <div id="kl-divergence"></div>
+        <div id="debug-info"></div>
+		
+		<!-- New section for Python code -->
+		<div style="margin-top: 30px; text-align: left; font-family: monospace;">
+			<h3>If you'd like to reproduce this interactive plot in Python with PyTorch, here is the code:</h3>
+			<pre><code>
+import numpy as np
+import matplotlib.pyplot as plt
+import torch
+from torch.distributions import Beta
+from torch.distributions.kl import kl_divergence
+from ipywidgets import interactive, FloatSlider, Layout
+from IPython.display import display
+
+def plot_beta_interactive(a=1.0, b=1.0, a2=2.0, b2=2.0):
+	# Create Beta distributions
+	distribution1 = Beta(torch.tensor(a), torch.tensor(b))
+	distribution2 = Beta(torch.tensor(a2), torch.tensor(b2))
+	
+	# Create x values
+	x = torch.linspace(0, 1, 1000)
+	
+	# Calculate PDFs
+	pdf1 = torch.exp(distribution1.log_prob(x))
+	pdf2 = torch.exp(distribution2.log_prob(x))
+	
+	# Convert to numpy
+	x_np = x.numpy()
+	pdf1_np = pdf1.numpy()
+	pdf2_np = pdf2.numpy()
+	
+	# Calculate KL divergence
+	kl = kl_divergence(distribution1, distribution2).item()
+	
+	# Create the plot
+	plt.figure(figsize=(10, 6))
+	plt.plot(x_np, pdf1_np, label=f'Beta(α={{a:.2f}}, β={{b:.2f}})')
+	plt.fill_between(x_np, pdf1_np, alpha=0.3)
+	plt.plot(x_np, pdf2_np, label=f'Beta(α={{a2:.2f}}, β={{b2:.2f}})')
+	plt.fill_between(x_np, pdf2_np, alpha=0.3)
+	
+	# Add KL divergence to the plot
+	plt.text(0.4, 0.85, f'KL(P||Q) = {{kl:.4f}}', transform=plt.gca().transAxes, 
+			 verticalalignment='top', bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+	
+	plt.xlabel('x')
+	plt.ylabel('Probability Density')
+	plt.title(f'Beta Distributions: (α={{a:.2f}}, β={{b:.2f}}) and (α={{a2:.2f}}, β={{b2:.2f}})')
+	plt.legend()
+	plt.grid(True, alpha=0.3)
+	plt.show()
+
+# Create interactive plot
+def create_interactive_beta_plot():
+	slider_layout = Layout(width='500px')
+	
+	interactive_plot = interactive(
+		plot_beta_interactive,
+		a=FloatSlider(min=0.001, max=100, step=0.001, value=1, description='a:', layout=slider_layout),
+		b=FloatSlider(min=0.001, max=100, step=0.001, value=1, description='b:', layout=slider_layout),
+		a2=FloatSlider(min=0.001, max=100, step=0.001, value=2, description='a2:', layout=slider_layout),
+		b2=FloatSlider(min=0.001, max=100, step=0.001, value=2, description='b2:', layout=slider_layout)
+	)
+	
+	display(interactive_plot)
+
+# Finally, run:
+create_interactive_beta_plot()
+			</code></pre>
+		</div>
+
+        <div class="credit">
+            Credit: <a href="https://taldatech.github.io">Tal Daniel</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function beta(x, a, b) {
+                return jStat.beta.pdf(x, a, b);
+            }
+			
+			function customBetaPDF(x, a, b) {
+				if (x < 0 || x > 1) return 0; // Out of bounds
+				if (a <= 0 || b <= 0) return 0; // Invalid parameters
+
+				const numerator = Math.pow(x, a - 1) * Math.pow(1 - x, b - 1);
+				const denominator = gamma(a) * gamma(b) / gamma(a + b);
+				
+				return numerator / denominator;
+			}
+
+			function gamma(n) {
+				// A simple gamma function implementation or use an external library
+				return Math.exp(logGamma(n));
+			}
+
+			function logGamma(z) {
+				// Use a library or implement a logarithmic gamma function
+				// This is a common implementation; you may find better versions
+				const x = 0.5 * (z - 1);
+				return (x * Math.log(2 * Math.PI) + 
+						(z - 0.5) * Math.log(z) - 
+						z + 
+						(1 + (1 / (12 * z)) - (1 / (360 * Math.pow(z, 2))) + (1 / (1260 * Math.pow(z, 3))) - (1 / (1680 * Math.pow(z, 4)))) * (1 - 1 / (30 * z)));
+			}
+
+            function klDivergence(a1, b1, a2, b2) {
+                const samples = 1000;
+                let kl = 0;
+                for (let i = 0; i < samples; i++) {
+                    const x = i / samples + 1e-5;
+                    //const p = beta(x, a1, b1);
+                    //const q = beta(x, a2, b2);
+					const p = customBetaPDF(x, a1, b1);
+                    const q = customBetaPDF(x, a2, b2);
+                    if (p > 0 && q > 0) {
+                        kl += (p * Math.log(p / q)) / samples;
+                    }
+                }
+                return isFinite(kl) ? kl : NaN;
+            }
+			
+
+            const margin = {top: 20, right: 20, bottom: 30, left: 50};
+            const width = 600 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("#plot")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scaleLinear().range([0, width]);
+            const y = d3.scaleLinear().range([height, 0]);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .attr("class", "x-axis");
+
+            svg.append("g")
+                .attr("class", "y-axis");
+
+            const line1 = svg.append("path").attr("class", "line1").attr("fill", "none").attr("stroke", "blue");
+            const line2 = svg.append("path").attr("class", "line2").attr("fill", "none").attr("stroke", "red");
+
+            function updatePlot(a1, b1, a2, b2) {
+                //const data1 = d3.range(1e-8, 1, 0.01).map(x => ({x: x, y: beta(x, a1, b1)}));
+                //const data2 = d3.range(1e-8, 1, 0.01).map(x => ({x: x, y: beta(x, a2, b2)}));
+				
+				const data1 = d3.range(1e-5, 1, 0.01).map(x => ({x: x, y: customBetaPDF(x, a1, b1)}));
+                const data2 = d3.range(1e-5, 1, 0.01).map(x => ({x: x, y: customBetaPDF(x, a2, b2)}));
+
+                const yMax = d3.max([...data1, ...data2], d => d.y);
+
+                x.domain([1e-5, 1]);
+                y.domain([0, yMax]);
+				//console.log(data1)
+				
+                svg.select(".x-axis").call(d3.axisBottom(x));
+                svg.select(".y-axis").call(d3.axisLeft(y));
+				
+                const lineGenerator = d3.line()
+                    .x(d => x(d.x))
+                    .y(d => y(d.y));
+
+				line1.attr("d", lineGenerator(data1));
+                line2.attr("d", lineGenerator(data2));
+
+                const kl = klDivergence(a1, b1, a2, b2);
+                d3.select("#kl-divergence").text(`KL Divergence: ${isNaN(kl) ? 'NaN' : kl.toFixed(4)}`);
+            }
+
+            function createSlider(id, start, update) {
+                noUiSlider.create(document.getElementById(id), {
+                    start: start,
+                    range: { min: 0.1, max: 100 },
+                    step: 0.01
+                });
+                
+                const valueSpan = document.getElementById(`value-${id.split('-')[1]}`);
+				const inputField = document.getElementById(`input-${id.split('-')[1]}`);
+				
+				// Initialize the input field with the starting value of the slider
+				inputField.value = start[0].toFixed(3);
+                
+                document.getElementById(id).noUiSlider.on('update', function (values, handle) {
+                    const value = parseFloat(values[handle]).toFixed(3);
+                    valueSpan.innerHTML = value;
+					// Update the input field with the slider value
+					inputField.value = value;
+                    update();
+                });
+				
+				// Update the slider when the input changes
+				inputField.addEventListener('change', function() {
+					const value = parseFloat(this.value).toFixed(3);
+					if (!isNaN(value) && value >= 0.1 && value <= 100) {  // Ensure valid range
+						document.getElementById(id).noUiSlider.set(value);
+					}
+				});
+            }
+
+            let a1 = 2, b1 = 2, a2 = 2, b2 = 5;
+
+            createSlider('slider-a1', [a1], () => {
+                a1 = parseFloat(document.getElementById('slider-a1').noUiSlider.get());
+                updatePlot(a1, b1, a2, b2);
+            });
+
+            createSlider('slider-b1', [b1], () => {
+                b1 = parseFloat(document.getElementById('slider-b1').noUiSlider.get());
+                updatePlot(a1, b1, a2, b2);
+            });
+
+            createSlider('slider-a2', [a2], () => {
+                a2 = parseFloat(document.getElementById('slider-a2').noUiSlider.get());
+                updatePlot(a1, b1, a2, b2);
+            });
+
+            createSlider('slider-b2', [b2], () => {
+                b2 = parseFloat(document.getElementById('slider-b2').noUiSlider.get());
+                updatePlot(a1, b1, a2, b2);
+            });
+
+            updatePlot(a1, b1, a2, b2);
+
+            setInterval(() => {
+                const debugInfo = `
+                    Current values:
+                    a1: ${a1}, b1: ${b1}, a2: ${a2}, b2: ${b2}
+                    Last update: ${new Date().toLocaleTimeString()}
+                `;
+                document.getElementById('debug-info').innerHTML = debugInfo;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
