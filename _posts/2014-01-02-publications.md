@@ -8,6 +8,19 @@ fa-icon: book
 ### Publications and Pre-Prints
 
 <p align="center">
+  <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ecdiff_paper_icon.png" style="height:130px" align="left">
+  <strong>EC-Diffuser: Multi-Object Manipulation via Entity-Centric Behavior Generation</strong>
+  <br>
+  Carl Qi, Dan Haramati, <strong>Tal Daniel</strong>, Aviv Tamar and Amy Zhang
+  <br>
+  <strong>International Conference on Learning Representations (ICLR) 2025</strong>
+  <br>
+  [<a href="https://arxiv.org/abs/2412.18907">Paper</a>][<a href="https://sites.google.com/view/ec-diffuser">Website</a>][<a href="https://github.com/carl-qi/EC-Diffuser">Code</a>]
+  <br>
+  <strong>TL;DR</strong> - We learn multi-object control policies for robotics from pixels with deep latent particles (DLP) and diffusion models.
+</p>
+
+<p align="center">
   <img src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ddlp_paper_icon.png" style="height:130px" align="left">
   <strong>DDLP: Unsupervised Object-centric Video Prediction with Deep Dynamic Latent Particles</strong>
   <br>
