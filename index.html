@@ -1,17 +1,7 @@
----
----
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ site.title }}</title>
-	<meta name="keywords" content="{{ site.keywords }}">
-	<meta name="description" content="{{ site.description }}">
-  <link rel="stylesheet" href="combo.css">
-  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZG73KLFZXG"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
@@ -20,54 +10,1637 @@
 
 	  gtag('config', 'G-ZG73KLFZXG');
 	</script>
-  {% if site.favicon %}<link rel="shortcut icon" href="{{ site.favicon }}" type="image/x-icon">{% endif %}
-	{% if site.touch_icon %}<link rel="apple-touch-icon" href="{{ site.touch_icon }}">{% endif %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tal Daniel</title>
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/taldatech/taldatech.github.io/refs/heads/main/img/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0d0d0f;
+      --bg2:       #131316;
+      --bg3:       #1a1a1f;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.12);
+      --text:      #e8e8ec;
+      --text-dim:  #888899;
+      --text-mute: #555566;
+      --accent:    #7eb8f7;
+      --accent2:   #a78bfa;
+      --accent-glow: rgba(126,184,247,0.15);
+      --card-bg:   #16161b;
+      --card-hover: #1e1e26;
+      --nav-h:     60px;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans:  'DM Sans', system-ui, sans-serif;
+      --mono:  'JetBrains Mono', monospace;
+    }
+
+    /* ─── PARTICLES CANVAS ─── */
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── SIDE NAV ─── */
+    .side-nav {
+      position: fixed;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 90;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .side-nav.visible { opacity: 1; }
+
+    .side-nav-item {
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: rgba(126,184,247,0.25);
+      border-radius: 50%;
+      margin: 14px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .side-nav-item:hover,
+    .side-nav-item.active {
+      background: rgba(126,184,247,0.85);
+      transform: scale(1.6);
+    }
+
+    .side-nav-item::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(13,13,15,0.95);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      border: 1px solid rgba(126,184,247,0.2);
+    }
+
+    .side-nav-item:hover::before { opacity: 1; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 1000;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      min-height: 100vh;
+      padding: calc(var(--nav-h) + 80px) 40px 80px;
+    }
+
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* ─── HERO / HOME ─── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: calc(var(--nav-h) + 40px);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .hero-photo {
+      margin-bottom: 32px;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+      cursor: default;
+      /* Fixed height = exactly one line — prevents layout shift during typewriter */
+      height: 1.1em;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0.85;
+    }
+
+    .hero-bio {
+      color: var(--text-dim);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 12px;
+      max-width: 680px;
+    }
+
+    .hero-bio a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(126,184,247,0.3);
+      transition: border-color 0.2s;
+    }
+
+    .hero-bio a:hover { border-color: var(--accent); }
+
+    .fellowships {
+      margin: 28px auto 0;
+      max-width: 580px;
+      width: 100%;
+    }
+
+    .fellowships-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      margin-bottom: 10px;
+    }
+
+    .fellowship-item {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 16px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(126,184,247,0.12);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .fellowship-year {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    .fellowship-name {
+      font-size: 0.83rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* ─── CIRCULAR SOCIAL BUTTONS (hero only) ─── */
+    .social-links-circular {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 36px;
+      justify-content: center;
+    }
+
+    .icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .icon-btn-circle {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(126,184,247,0.08);
+      border: 2px solid rgba(126,184,247,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-btn-circle::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      border-radius: 50%;
+      background: rgba(126,184,247,0.18);
+      transform: translate(-50%, -50%);
+      transition: all 0.35s ease;
+    }
+
+    .icon-btn:hover .icon-btn-circle::before {
+      width: 100%; height: 100%;
+    }
+
+    .icon-btn:hover .icon-btn-circle {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(126,184,247,0.35);
+      border-color: var(--accent);
+    }
+
+    .icon-btn-circle svg {
+      width: 22px; height: 22px;
+      fill: var(--accent);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .icon-btn:hover .icon-btn-circle svg {
+      transform: scale(1.15);
+    }
+
+    .icon-btn-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      transition: color 0.3s;
+    }
+
+    .icon-btn:hover .icon-btn-label { color: var(--accent); }
+
+    /* ─── RECTANGULAR SOCIAL LINKS (footer/contact) ─── */
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      background: var(--bg2);
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      border-color: rgba(126,184,247,0.4);
+      background: var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .social-links a svg {
+      width: 14px; height: 14px;
+      fill: currentColor;
+    }
+
+    .email-chip {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .email-chip span { color: var(--text-mute); }
+
+    /* ─── PUBLICATIONS ─── */
+    #publications {
+      background: var(--bg);
+    }
+
+    .pub-card {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 28px;
+      padding: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pub-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: transparent;
+      transition: background 0.25s;
+    }
+
+    .pub-card:hover {
+      background: var(--card-hover);
+      border-color: var(--border2);
+      transform: translateX(3px);
+    }
+
+    .pub-card:hover::before {
+      background: var(--accent);
+    }
+
+    .pub-thumb {
+      width: 130px;
+      height: 90px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      padding: 4px;
+    }
+
+    .pub-body h3 {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .pub-authors {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .pub-authors strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .pub-venue {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .pub-venue .award {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 0.72rem;
+      padding: 1px 7px;
+      background: rgba(167,139,250,0.15);
+      color: var(--accent2);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 20px;
+    }
+
+    .pub-tldr {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .pub-tldr strong { color: var(--text-mute); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .pub-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 3px 10px;
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .pub-links a:hover {
+      color: var(--accent);
+      border-color: rgba(126,184,247,0.4);
+      background: var(--accent-glow);
+    }
+
+    /* ─── TEACHING ─── */
+    #teaching { background: var(--bg2); }
+
+    .teaching-intro {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      max-width: 680px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+      gap: 20px;
+    }
+
+    .course-card {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      padding: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.25s;
+    }
+
+    .course-card:hover {
+      background: var(--card-hover);
+      border-color: var(--border2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .course-thumb {
+      width: 100px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 4px;
+    }
+
+    .course-body h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .course-years {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-mute);
+      margin-bottom: 8px;
+    }
+
+    .course-topics {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .course-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .course-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 2px 9px;
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .course-links a:hover {
+      color: var(--accent);
+      border-color: rgba(126,184,247,0.4);
+      background: var(--accent-glow);
+    }
+
+    /* ─── PROJECTS ─── */
+    #projects { background: var(--bg); }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+
+    .project-card:hover {
+      background: var(--card-hover);
+      border-color: var(--border2);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .project-media {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      display: block;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      padding: 8px;
+    }
+
+    .project-body {
+      padding: 18px 20px;
+    }
+
+    .project-body h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 3px 10px;
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .project-links a:hover {
+      color: var(--accent);
+      border-color: rgba(126,184,247,0.4);
+      background: var(--accent-glow);
+    }
+
+    /* ─── PROJECT VIDEO THUMBNAIL ─── */
+    .project-video-thumb {
+      width: 100%;
+      height: 180px;
+      display: block;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .project-video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      border-radius: 0;
+      border: none;
+      padding: 0;
+    }
+
+    .project-video-thumb:hover img {
+      transform: scale(1.04);
+      opacity: 0.75;
+    }
+
+    .project-video-thumb .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+
+    .project-video-thumb .play-btn svg {
+      width: 20px; height: 20px;
+      fill: #fff;
+      margin-left: 3px; /* optical centering for play triangle */
+    }
+
+    .project-video-thumb:hover .play-btn {
+      background: rgba(255,0,0,0.85);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    #contact {
+      background: var(--bg2);
+      min-height: auto;
+      padding-bottom: 120px;
+    }
+
+    .contact-box {
+      max-width: 560px;
+    }
+
+    .contact-box p {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-mute);
+    }
+
+    footer a { color: var(--text-mute); text-decoration: none; }
+    footer a:hover { color: var(--text-dim); }
+
+    /* ─── DIVIDER ─── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2), transparent);
+      margin: 0;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { animation: fadeUp 0.6s ease forwards; }
+    .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+    .fade-up-2 { animation-delay: 0.2s; opacity: 0; }
+    .fade-up-3 { animation-delay: 0.3s; opacity: 0; }
+    .fade-up-4 { animation-delay: 0.4s; opacity: 0; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .pub-card { grid-template-columns: 1fr; }
+      .pub-thumb { width: 100%; height: 160px; }
+      .course-grid { grid-template-columns: 1fr; }
+      .course-card { grid-template-columns: 1fr; }
+      .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 2px; }
+      .nav-links a { font-size: 0.7rem; padding: 5px 8px; }
+      section { padding-left: 20px; padding-right: 20px; }
+      .side-nav { display: none; }
+    }
+
+    /* ─── EASTER EGG: PHOTO BURST ─── */
+    .hero-photo-wrap {
+      position: relative;
+      margin-bottom: 32px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .hero-photo-wrap img {
+      position: relative;
+      z-index: 1;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 2px solid var(--border2);
+      box-shadow:
+        0 0 0 8px rgba(126,184,247,0.05),
+        0 0 60px rgba(126,184,247,0.1);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-photo-wrap:hover img {
+      transform: scale(1.04);
+      box-shadow:
+        0 0 0 8px rgba(126,184,247,0.14),
+        0 0 80px rgba(126,184,247,0.22);
+    }
+
+    /* ─── EASTER EGG: TYPEWRITER NAME ─── */
+
+    .hero-name .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.8em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      opacity: 0;
+    }
+
+    .hero-name .cursor.blinking {
+      animation: blink 0.55s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-  <div id="main">
 
-    <nav><ul>
-      {% for node in site.posts reversed %}
-        {% capture id %}{{ node.id | remove:'/' | downcase }}{% endcapture %}
-        <li class="p-{{id}}"><a href="#{{id}}">{{node.title}}</a></li>
-      {% endfor %}
-    </ul></nav>
+  <!-- ─── PARTICLES ─── -->
+  <canvas id="particles-canvas"></canvas>
 
-
-    {% for page in site.posts reversed %}
-      {% capture id %}{{ page.id | remove:'/' | downcase }}{% endcapture %}
-      <div id="{{id}}" class="section p-{{id}}">
-        {% if page.icon %}
-        <div class="subtlecircle sectiondivider imaged">
-          <img src="{{page.icon}}" alt="section icon" />
-          <h5 class="icon-title">{{ page.title }}</h5>
-        </div>
-        {% elsif page.fa-icon %}
-        <div class="subtlecircle sectiondivider faicon">
-          <span class="fa-stack">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-{{ page.fa-icon }} fa-stack-1x"></i>
-          </span>
-          <h5 class="icon-title">{{ page.title }}</h5>
-        </div>
-        {% endif %}
-        <div class="container {{ page.style }}">
-          {{ page.content }}
-        </div>
-      </div>
-    {% endfor %}
-
-
-    <div id="footer" class="section text-white">
-      <div class="container">
-        {% capture foottext %} {% include footer.md %} {% endcapture %}
-        {{ foottext | markdownify }}
-      </div>
-    </div>
+  <!-- ─── SIDE NAV (appears after scrolling past hero) ─── -->
+  <div class="side-nav" id="side-nav">
+    <a class="side-nav-item active" href="#home"         data-label="Home"></a>
+    <a class="side-nav-item"        href="#publications" data-label="Publications"></a>
+    <a class="side-nav-item"        href="#teaching"     data-label="Teaching"></a>
+    <a class="side-nav-item"        href="#projects"     data-label="Projects"></a>
+    <a class="side-nav-item"        href="#contact"      data-label="Contact"></a>
   </div>
 
-{% include analytics.html %}
+  <!-- ─── NAV ─── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Tal Daniel</a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─── HOME ─── -->
+  <section id="home">
+    <div class="inner" style="display:flex;justify-content:center;">
+      <div class="hero-inner fade-up fade-up-1">
+
+        <div class="hero-photo-wrap" id="hero-photo-wrap">
+          <img
+            src="https://raw.githubusercontent.com/taldatech/taldatech.github.io/main/img/td_profile.png"
+            alt="Tal Daniel"
+          />
+        </div>
+
+        <h1 class="hero-name" id="hero-name"><span id="name-text">Tal Daniel</span><span class="cursor" id="name-cursor"></span></h1>
+        <div class="hero-role">Postdoctoral Researcher &nbsp;·&nbsp; ML &amp; Robotics</div>
+
+        <p class="hero-bio">
+          Postdoctoral Fellow at the
+          <a href="https://www.ri.cmu.edu/">Carnegie Mellon University Robotics Institute</a>,
+          working with <a href="https://www.cs.cmu.edu/~dpathak/">Prof. Deepak Pathak</a>
+          and <a href="https://davheld.github.io/">Prof. David Held</a>.
+          Research spanning unsupervised &amp; self-supervised representation learning,
+          generative modeling, reinforcement learning, and robotics.
+        </p>
+
+        <p class="hero-bio">
+          Ph.D. from the <a href="https://www.technion.ac.il/en/home-2/">Technion</a> ECE Department,
+          advised by <a href="https://avivt.github.io/avivt/">Prof. Aviv Tamar</a>.
+          B.Sc. and M.Sc. both in ECE from the Technion (Cum Laude / Summa Cum Laude).
+        </p>
+
+        <div class="fellowships">
+          <div class="fellowships-label">Fellowships</div>
+          <div class="fellowship-item">
+            <span class="fellowship-year">2024</span>
+            <span class="fellowship-name">Irwin &amp; Joan Jacobs Ph.D. Excellence Fellowship</span>
+          </div>
+          <div class="fellowship-item">
+            <span class="fellowship-year">2023</span>
+            <span class="fellowship-name">Miriam &amp; Aaron Gutwirth Memorial Ph.D. Excellence Fellowship</span>
+          </div>
+        </div>
+
+        <div class="email-chip">
+          <span>✉</span> tdaniel at andrew dot cmu dot edu
+        </div>
+
+        <!-- Circular social buttons for hero -->
+        <div class="social-links-circular">
+          <a href="https://www.linkedin.com/in/tal-daniel-2b919513b/" target="_blank" class="icon-btn">
+            <div class="icon-btn-circle">
+              <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            <span class="icon-btn-label">LinkedIn</span>
+          </a>
+          <a href="https://github.com/taldatech" target="_blank" class="icon-btn">
+            <div class="icon-btn-circle">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </div>
+            <span class="icon-btn-label">GitHub</span>
+          </a>
+          <a href="https://scholar.google.com/citations?hl=en&authuser=1&user=WqOoA3IAAAAJ" target="_blank" class="icon-btn">
+            <div class="icon-btn-circle">
+              <svg viewBox="0 0 24 24"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+            </div>
+            <span class="icon-btn-label">Scholar</span>
+          </a>
+          <a href="https://bsky.app/profile/taldaniel.bsky.social" target="_blank" class="icon-btn">
+            <div class="icon-btn-circle">
+              <svg viewBox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+            </div>
+            <span class="icon-btn-label">Bluesky</span>
+          </a>
+          <a href="https://twitter.com/TalDaniel8" target="_blank" class="icon-btn">
+            <div class="icon-btn-circle">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <span class="icon-btn-label">Twitter</span>
+          </a>
+          <a href="https://www.youtube.com/@taldaniel6726" target="_blank" class="icon-btn">
+            <div class="icon-btn-circle">
+              <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </div>
+            <span class="icon-btn-label">YouTube</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── PUBLICATIONS ─── -->
+  <section id="publications">
+    <div class="inner">
+      <div class="section-label">Publications &amp; Pre-Prints</div>
+	  
+	  <!-- LPWM -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/lpwm_clip.gif"
+          alt="LPWM thumbnail" />
+        <div class="pub-body">
+          <h3>Latent Particle World Models: Self-supervised Object-centric Stochastic Dynamics Modeling</h3>
+          <div class="pub-authors"><strong>Tal Daniel</strong>, Carl Qi, Dan Haramati, Amir Zadeh, Chuan Li, Aviv Tamar, Deepak Pathak and David Held</div>
+          <div class="pub-venue">ICLR 2026 <span class="award">Oral</span></div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — A self-supervised object-centric world model that learns keypoints, and masks directly from videos, supports multi-modal conditioning, scaled to real-world multi-object datasets</div>
+          <div class="pub-links">
+            <a href="https://openreview.net/forum?id=lTaPtGiUUc" target="_blank">Paper</a>
+            <a href="https://taldatech.github.io/lpwm-web/" target="_blank">Website</a>
+            <a href="https://github.com/taldatech/lpwm" target="_blank">Code</a>
+            <a href="https://youtu.be/aZeaCyXJjYI" target="_blank">Video</a>
+          </div>
+        </div>
+      </div>
+	  
+	  <!-- HECRL -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/hecrl_clip.gif"
+          alt="HECRL thumbnail" />
+        <div class="pub-body">
+          <h3>Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion</h3>
+          <div class="pub-authors">Dan Haramati, Carl Qi, <strong>Tal Daniel</strong>, Amy Zhang, Aviv Tamar and George Konidaris</div>
+          <div class="pub-venue">ICLR 2026</div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — An entity-centric hierarchical RL framework using diffusion subgoals for improved long-horizon tasks.</div>
+          <div class="pub-links">
+            <a href="https://openreview.net/forum?id=TimC6hxVHj" target="_blank">Paper</a>
+            <a href="https://sites.google.com/view/hecrl" target="_blank">Website</a>
+            <a href="https://github.com/DanHrmti/HECRL" target="_blank">Code</a>
+            <a href="https://www.youtube.com/live/GO-ct_v0n7s?si=SwluyZcuKKVl-KsX&t=9073" target="_blank">Video</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- EC-Diffuser -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ecdiffuser_clip.gif"
+          alt="EC-Diffuser thumbnail" />
+        <div class="pub-body">
+          <h3>EC-Diffuser: Multi-Object Manipulation via Entity-Centric Behavior Generation</h3>
+          <div class="pub-authors">Carl Qi, Dan Haramati, <strong>Tal Daniel</strong>, Aviv Tamar and Amy Zhang</div>
+          <div class="pub-venue">ICLR 2025</div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Multi-object control policies for robotics from pixels using deep latent particles (DLP) and diffusion models.</div>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2412.18907" target="_blank">Paper</a>
+            <a href="https://sites.google.com/view/ec-diffuser" target="_blank">Website</a>
+            <a href="https://github.com/carl-qi/EC-Diffuser" target="_blank">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DDLP -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ddlp_paper_icon_gif.gif"
+          alt="DDLP thumbnail" />
+        <div class="pub-body">
+          <h3>DDLP: Unsupervised Object-centric Video Prediction with Deep Dynamic Latent Particles</h3>
+          <div class="pub-authors"><strong>Tal Daniel</strong> and Aviv Tamar</div>
+          <div class="pub-venue">TMLR 2024</div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Object-centric video prediction, generation, and modification via the deep latent particle (DLP) representation.</div>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2306.05957" target="_blank">Paper</a>
+            <a href="https://taldatech.github.io/ddlp-web/" target="_blank">Website</a>
+            <a href="https://github.com/taldatech/ddlp" target="_blank">Code</a>
+            <a href="https://www.youtube.com/watch?v=3S2pKhi_ewY" target="_blank">Video</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ECRL -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ecrl_clip.gif"
+          alt="ECRL thumbnail" />
+        <div class="pub-body">
+          <h3>Entity-Centric Reinforcement Learning for Object Manipulation from Pixels</h3>
+          <div class="pub-authors">Dan Haramati, <strong>Tal Daniel</strong> and Aviv Tamar</div>
+          <div class="pub-venue">ICLR 2024 <span class="award">Spotlight</span></div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Using DLP instead of raw pixels unlocks compositional capabilities in reinforcement learning.</div>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2404.01220" target="_blank">Paper</a>
+            <a href="https://sites.google.com/view/entity-centric-rl" target="_blank">Website</a>
+            <a href="https://github.com/DanHrmti/ECRL" target="_blank">Code</a>
+            <a href="https://youtu.be/1YJCWyLcGHk" target="_blank">Video</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DLP -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/dlp_paper_icon_gif.gif"
+          alt="DLP thumbnail" />
+        <div class="pub-body">
+          <h3>Unsupervised Image Representation Learning with Deep Latent Particles</h3>
+          <div class="pub-authors"><strong>Tal Daniel</strong> and Aviv Tamar</div>
+          <div class="pub-venue">ICML 2022 <span class="award">Spotlight</span></div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Represent images as latent particles for unsupervised object detection, segmentation, and manipulation.</div>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2205.15821" target="_blank">Paper</a>
+            <a href="https://taldatech.github.io/deep-latent-particles-web/" target="_blank">Website</a>
+            <a href="https://github.com/taldatech/deep-latent-particles-pytorch" target="_blank">Code</a>
+            <a href="https://www.youtube.com/watch?v=6xywAtE7WPw" target="_blank">Video</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soft-IntroVAE -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/sv_paper_icon_rect.png"
+          alt="Soft-IntroVAE thumbnail" />
+        <div class="pub-body">
+          <h3>Soft-IntroVAE: Analyzing and Improving the Introspective Variational Autoencoder</h3>
+          <div class="pub-authors"><strong>Tal Daniel</strong> and Aviv Tamar</div>
+          <div class="pub-venue">CVPR 2021 <span class="award">Oral</span> &nbsp; <span class="award" style="background:rgba(251,178,37,0.12);color:#f5c842;border-color:rgba(251,178,37,0.3);">Best Paper — MLIS-TCE 2022</span></div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Stable adversarial VAE training without a discriminator; applicable to density estimation, image generation, OOD detection, and more.</div>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2012.13253" target="_blank">Paper</a>
+            <a href="https://taldatech.github.io/soft-intro-vae-web/" target="_blank">Website</a>
+            <a href="https://github.com/taldatech/soft-intro-vae-pytorch" target="_blank">Code</a>
+            <a href="https://www.youtube.com/watch?v=1NfsSYoHnBg" target="_blank">Video</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Novelty -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/nd_paper_icon_rect.png"
+          alt="Novelty Detection thumbnail" />
+        <div class="pub-body">
+          <h3>Deep Variational Semi-Supervised Novelty Detection</h3>
+          <div class="pub-authors"><strong>Tal Daniel</strong>, Thanard Kurutach and Aviv Tamar</div>
+          <div class="pub-venue">NeurIPS 2021 Workshop — Deep Generative Models</div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Principled incorporation of negative samples in the VAE framework for meaningful representations.</div>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/1911.04971" target="_blank">Paper</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="pub-card">
+        <img class="pub-thumb"
+          src="https://github.com/taldatech/taldatech.github.io/raw/main/img/pw_paper_icon_rect.png"
+          alt="Password similarity thumbnail" />
+        <div class="pub-body">
+          <h3>Beyond Credential Stuffing: Password Similarity Models Using Neural Networks</h3>
+          <div class="pub-authors">Bijeeta Pal, <strong>Tal Daniel</strong>, Rahul Chatterjee and Thomas Ristenpart</div>
+          <div class="pub-venue">IEEE S&amp;P 2019</div>
+          <div class="pub-tldr"><strong>TL;DR</strong> — Cracking passwords with neural networks — and building defenses against such attacks.</div>
+          <div class="pub-links">
+            <a href="https://ieeexplore.ieee.org/document/8835247" target="_blank">Paper</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── TEACHING ─── -->
+  <section id="teaching">
+    <div class="inner">
+      <div class="section-label">Teaching</div>
+      <p class="teaching-intro">
+        Course materials from my time at the Technion — all freely available on GitHub.
+        Tutorials are in Jupyter Notebook format with theory, Python &amp; PyTorch code, and PDF versions.
+      </p>
+
+      <div class="course-grid">
+
+        <div class="course-card">
+          <img class="course-thumb"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/dl_course_icon_rect.png"
+            alt="Deep Learning course" />
+          <div class="course-body">
+            <h3>ECE 046211 — Deep Learning</h3>
+            <div class="course-years">2021 – 2024</div>
+            <div class="course-topics">CNNs, RNNs, Transformers, AutoDiff, Self-Supervised Learning, Transfer Learning &amp; more.</div>
+            <div class="course-links">
+              <a href="https://github.com/taldatech/ee046211-deep-learning" target="_blank">GitHub</a>
+              <a href="https://taldatech.github.io/ee046211-deep-learning/" target="_blank">Projects</a>
+              <a href="https://www.youtube.com/playlist?list=PLy3Xsl9jz-9WBHO850WFxv2TB5qtAlk0r" target="_blank">Videos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <img class="course-thumb"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/cv_course_icon_rect.png"
+            alt="Computer Vision course" />
+          <div class="course-body">
+            <h3>ECE 046746 — Computer Vision</h3>
+            <div class="course-years">Spring 2020, Spring 2021</div>
+            <div class="course-topics">Image Processing, Segmentation, Object Detection &amp; Tracking, GANs, 3D Deep Learning.</div>
+            <div class="course-links">
+              <a href="https://github.com/taldatech/ee046746-computer-vision" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <img class="course-thumb"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/anam_course_icon_rect.png"
+            alt="Unsupervised Learning course" />
+          <div class="course-body">
+            <h3>ECE 046202 — Unsupervised Learning &amp; Data Analysis</h3>
+            <div class="course-years">Winter 2020, Winter 2021</div>
+            <div class="course-topics">PCA, t-SNE, VAE, GAN, Clustering, Hypothesis Testing.</div>
+            <div class="course-links">
+              <a href="https://github.com/taldatech/ee046202-unsupervised-learning-data-analysis" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <img class="course-thumb"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/ml_course_icon_rect.png"
+            alt="Intro to ML course" />
+          <div class="course-body">
+            <h3>CS 236756 — Introduction to Machine Learning</h3>
+            <div class="course-years">Spring 2019, Spring 2020</div>
+            <div class="course-topics">Linear Models, Decision Trees, SVM, EM, Boosting, PAC Learning, Deep Learning intro.</div>
+            <div class="course-links">
+              <a href="https://github.com/taldatech/cs236756-intro-to-ml" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── PROJECTS ─── -->
+  <section id="projects">
+    <div class="inner">
+      <div class="section-label">Projects &amp; Experiments</div>
+
+      <div class="project-grid">
+
+        <div class="project-card">
+          <img class="project-media"
+            src="https://taldatech.github.io/ddlp-web/assets/images/DDLP_GUI.gif"
+            alt="DDLP GUI" />
+          <div class="project-body">
+            <h3>Interactive GUI for Deep (Dynamic) Latent Particles — D(D)LP</h3>
+            <div class="project-links">
+              <a href="https://taldatech.github.io/ddlp-web/" target="_blank">Project Site</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-media"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/plane_to_car_slow.gif"
+            alt="3D Soft-IntroVAE interpolation" />
+          <div class="project-body">
+            <h3>Latent Space Interpolation: Airplane → Car (3D Soft-IntroVAE)</h3>
+            <div class="project-links">
+              <a href="https://taldatech.github.io/soft-intro-vae-web/" target="_blank">Project Site</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-media"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/beta_app.PNG"
+            alt="Beta Distribution Applet" />
+          <div class="project-body">
+            <h3>Interactive Beta Distribution Applet</h3>
+            <div class="project-links">
+              <a href="https://taldatech.github.io/beta_dist_app.html" target="_blank">Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-media"
+            src="https://github.com/taldatech/taldatech.github.io/raw/main/img/im2pencil_dp.jpg"
+            alt="Pencil Drawing" />
+          <div class="project-body">
+            <h3>Python: Pencil Drawing by Sketch &amp; Tone (Lu et al., NPAR 2012)</h3>
+            <div class="project-links">
+              <a href="https://github.com/taldatech/image2pencil-drawing" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <a class="project-video-thumb" href="https://www.youtube.com/watch?v=i8Cnas7QrMc" target="_blank">
+            <img src="https://img.youtube.com/vi/i8Cnas7QrMc/hqdefault.jpg" alt="LS-DQN demo" />
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <div class="project-body">
+            <h3>PyTorch: Least-Squares DQN (DuelingDQN, Boosted FQI)</h3>
+            <div class="project-links">
+              <a href="https://github.com/taldatech/pytorch-ls-dqn" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <a class="project-video-thumb" href="https://www.youtube.com/watch?v=fa-xLXTzZ8I" target="_blank">
+            <img src="https://img.youtube.com/vi/fa-xLXTzZ8I/hqdefault.jpg" alt="Bayesian Gradient Descent demo" />
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <div class="project-body">
+            <h3>TensorFlow: Bayesian Gradient Descent (Zeno et al., 2019)</h3>
+            <div class="project-links">
+              <a href="https://github.com/taldatech/tf-bgd" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <iframe
+            src="https://player.vimeo.com/video/229402111?title=0&byline=0&portrait=0"
+            style="width:100%;height:180px;border:none;display:block;background:var(--bg3);border-bottom:1px solid var(--border);"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            title="Litecoin Miner demo"></iframe>
+          <div class="project-body">
+            <h3>Android App: Scrypt Coin (Litecoin) Miner with Custom Options</h3>
+            <div class="project-links">
+              <a href="https://github.com/taldatech/LtcTEMiner" target="_blank">GitHub</a>
+              <a href="https://github.com/taldatech/StratumMiner" target="_blank">Stratum Miner</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="inner">
+      <div class="section-label">Contact</div>
+      <div class="contact-box">
+        <p>
+          Feel free to reach out about research, collaborations, or anything else.
+        </p>
+        <div class="email-chip" style="margin-bottom:32px;">
+          <span>✉</span> tdaniel at andrew dot cmu dot edu
+        </div>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/tal-daniel-2b919513b/" target="_blank">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/taldatech" target="_blank">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+          <a href="https://scholar.google.com/citations?hl=en&authuser=1&user=WqOoA3IAAAAJ" target="_blank">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+            Scholar
+          </a>
+          <a href="https://bsky.app/profile/taldaniel.bsky.social" target="_blank">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+            Bluesky
+          </a>
+          <a href="https://twitter.com/TalDaniel8" target="_blank">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Twitter
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Tal Daniel &nbsp;·&nbsp;
+      <a href="https://github.com/taldatech">github.com/taldatech</a>
+    </p>
+  </footer>
+
+  <script>
+    // ─── NEURAL NET PARTICLES ───
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const mouse = { x: -9999, y: -9999 }; // kept for signal colour logic but no attraction
+    let time = 0;
+    const nodes = [];
+    const NODE_COUNT = 55;
+    const CONNECTION_DIST = 160;
+
+    // A "signal" ripple travelling along an edge
+    const signals = [];
+
+    class Node {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.28;
+        this.vy = (Math.random() - 0.5) * 0.28;
+        this.r = Math.random() * 1.4 + 0.8;
+        // pulse: each node breathes at its own pace
+        this.pulsePhase = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.018 + Math.random() * 0.022;
+        this.pulseAmp   = 0.5 + Math.random() * 0.5; // ring opacity amplitude
+        this.ringR      = 0;   // current ring radius
+        this.ringAlpha  = 0;
+        // fire a ring pulse periodically
+        this.nextPulse  = Math.random() * 200;
+        this.active     = false; // glowing near mouse
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        // soft wrap
+        if (this.x < -20) this.x = canvas.width  + 20;
+        if (this.x > canvas.width  + 20) this.x = -20;
+        if (this.y < -20) this.y = canvas.height + 20;
+        if (this.y > canvas.height + 20) this.y = -20;
+
+        // dampen
+        this.vx *= 0.98; this.vy *= 0.98;
+
+        // ring pulse
+        if (this.ringR > 0) {
+          this.ringR    += 1.0;
+          this.ringAlpha = Math.max(0, this.ringAlpha - 0.024);
+        }
+        this.nextPulse--;
+        if (this.nextPulse <= 0) {
+          this.ringR     = this.r + 1;
+          this.ringAlpha = 0.25;
+          this.nextPulse = 200 + Math.random() * 300;
+          // spawn a signal along a random neighbour
+          spawnSignal(this);
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(126,184,247,0.30)';
+        ctx.fill();
+
+        if (this.ringAlpha > 0.01) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.ringR, 0, Math.PI*2);
+          ctx.strokeStyle = `rgba(126,184,247,${this.ringAlpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Signal: a bright dot that travels along an edge
+    class Signal {
+      constructor(from, to) {
+        this.from = from;
+        this.to   = to;
+        this.t    = 0;          // 0→1 progress
+        this.speed = 0.012 + Math.random() * 0.010;
+        this.done  = false;
+      }
+      update() {
+        this.t += this.speed;
+        if (this.t >= 1) {
+          this.done = true;
+          // trigger a small ring on arrival
+          this.to.ringR     = this.to.r + 1;
+          this.to.ringAlpha = 0.15;
+        }
+      }
+      draw() {
+        const x = this.from.x + (this.to.x - this.from.x) * this.t;
+        const y = this.from.y + (this.to.y - this.from.y) * this.t;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.5, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(244,114,182,0.35)';
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = 'rgba(244,114,182,0.15)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function spawnSignal(fromNode) {
+      // pick closest neighbour to send signal to
+      let best = null, bestD = Infinity;
+      for (const n of nodes) {
+        if (n === fromNode) continue;
+        const dx = n.x - fromNode.x, dy = n.y - fromNode.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < CONNECTION_DIST && d < bestD) { bestD = d; best = n; }
+      }
+      if (best) signals.push(new Signal(fromNode, best));
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i+1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < CONNECTION_DIST) {
+            const alpha = (1 - d/CONNECTION_DIST) * 0.09;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(126,184,247,${alpha})`;
+            ctx.lineWidth = 0.4;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < NODE_COUNT; i++) nodes.push(new Node());
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time++;
+      drawConnections();
+      nodes.forEach(n => { n.update(); n.draw(); });
+      for (let i = signals.length-1; i >= 0; i--) {
+        signals[i].update();
+        if (!signals[i].done) signals[i].draw();
+        else signals.splice(i, 1);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+    // ─── SIDE NAV + ACTIVE NAV ───
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sideNavItems = document.querySelectorAll('.side-nav-item');
+    const sideNav = document.getElementById('side-nav');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(a => a.classList.remove('active'));
+          sideNavItems.forEach(a => a.classList.remove('active'));
+          const activeTop = document.querySelector(`.nav-links a[href="#${id}"]`);
+          const activeSide = document.querySelector(`.side-nav-item[href="#${id}"]`);
+          if (activeTop) activeTop.classList.add('active');
+          if (activeSide) activeSide.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight * 0.7) {
+        sideNav.classList.add('visible');
+      } else {
+        sideNav.classList.remove('visible');
+      }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    // ─── EASTER EGG: TYPEWRITER ON NAME HOVER ───
+    const nameText   = document.getElementById('name-text');
+    const nameCursor = document.getElementById('name-cursor');
+    const realName   = 'Tal Daniel';
+    const eggText    = 'Not a Robot... probably';
+    let typeTimeout  = null;
+    let isAnimating  = false;
+
+    function typewriterSequence(eraseFrom, typeTo, onDone) {
+      let text = eraseFrom;
+      function erase() {
+        if (text.length === 0) { setTimeout(() => typeIn(), 120); return; }
+        text = text.slice(0, -1);
+        nameText.textContent = text;
+        typeTimeout = setTimeout(erase, 45);
+      }
+      function typeIn() {
+        const target = typeTo;
+        function step() {
+          if (nameText.textContent.length >= target.length) {
+            if (onDone) onDone();
+            return;
+          }
+          nameText.textContent = target.slice(0, nameText.textContent.length + 1);
+          typeTimeout = setTimeout(step, 55);
+        }
+        step();
+      }
+      erase();
+    }
+
+    document.querySelector('.hero-name').addEventListener('mouseenter', () => {
+      if (isAnimating) return;
+      isAnimating = true;
+      clearTimeout(typeTimeout);
+      nameCursor.classList.add('blinking');
+      typewriterSequence(realName, eggText, () => {
+        // hold a beat, then restore
+        typeTimeout = setTimeout(() => {
+          typewriterSequence(eggText, realName, () => {
+            nameCursor.classList.remove('blinking');
+            isAnimating = false;
+          });
+        }, 1400);
+      });
+    });
+  </script>
 </body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="site.js"></script>
 </html>
